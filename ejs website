@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekday Warrior</title>
+</head>
+<body>
+    <h1>Hey, It's <%=dayType%> , <%=advice%>!!</h1>
+</body>
+</html>
+import express from "express";
+const app=express();
+const port=3000;
+
+app.set('view engine', 'ejs');
+app.set('views', process.cwd());
+
+app.get("/",(req,res)=>
+{
+    const today=new Date();
+    const day=today.getDay();
+    let type="a weekday";
+    let adv="its time to work hard!!";
+
+    if(day===0 || day===6)
+    {
+        type="a weekend";
+        adv="its time to relax and have some fun!!";
+    }
+    res.render("index.ejs",
+    {   dayType:type,
+        advice:adv,
+    });
+});
+
+app.listen(port,() =>{
+    console.log(`Server is running on http://localhost:${port}`);
+});
